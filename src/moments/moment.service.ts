@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { MomentEntity } from "./entity/moment.entity";
 import { Repository } from "typeorm";
 import { CreateMomentDTO } from "./dto/create.moment.dto";
 import { UpdatePatchMomentDTO } from "./dto/update.patch.Moment.dto";
+import { MomentEntity } from "./entity/moment.entity";
 
 @Injectable()
 export class MomentService {
