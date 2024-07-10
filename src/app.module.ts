@@ -4,14 +4,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MomentModule } from './resources/moment/moment.module';
+import { AuthModule } from './resources/auth/auth.module';
 import { MomentEntity } from './resources/moment/entity/moment.entity';
+import { MomentModule } from './resources/moment/moment.module';
 import { UserEntity } from './resources/user/entity/user.entity';
+import { UserModule } from './resources/user/user.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    forwardRef(() => AuthModule),
     forwardRef(() => MomentModule),
+    forwardRef(() => UserModule),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,

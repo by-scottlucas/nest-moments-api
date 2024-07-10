@@ -1,19 +1,24 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from "src/resources/user/entity/user.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'moments' })
 export class MomentEntity {
 
     @PrimaryGeneratedColumn()
-    @ApiProperty({description: "Coluna de id da entidade"})
+    @ApiProperty({ description: "Coluna de id da entidade" })
     id: number;
 
     @Column()
-    @ApiProperty({description: "Coluna de titulo da entidade"})
+    @ApiProperty({ description: "Coluna de titulo da entidade" })
     titulo: string;
 
     @Column({ type: 'date' })
-    @ApiProperty({description: "Coluna de data da entidade"})
+    @ApiProperty({ description: "Coluna de data da entidade" })
     data: Date;
+
+    @ManyToOne(() => UserEntity, user => user.id)
+    @JoinColumn({name: 'id_usuario'})
+    id_usuario: UserEntity
 
 }

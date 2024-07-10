@@ -1,9 +1,10 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { CreateMomentDTO } from "./dto/create.moment.dto";
-import { UpdatePatchMomentDTO } from "./dto/update.patch.Moment.dto";
-import { MomentEntity } from "./entity/moment.entity";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { MomentDTO } from './dto/moment.dto';
+import { UpdatePatchMomentDTO } from './dto/update.patch.Moment.dto';
+import { MomentEntity } from './entity/moment.entity';
 
 @Injectable()
 export class MomentService {
@@ -13,33 +14,31 @@ export class MomentService {
         private momentRepository: Repository<MomentEntity>
     ) { }
 
-    async create(data: CreateMomentDTO) {
-
-        const moment = await this.momentRepository.create(data);
-
-        return this.momentRepository.save([moment]);
-    }
-
     async list() {
-        return this.momentRepository.find();
+        return this.momentRepository.find({ relations: ['usuario'] });
     }
 
-    async show(id: number) {
+    create(data: MomentDTO) {
+        // const moment = await this.momentRepository.create(data);
+        return this.momentRepository.save(data);
+    }
 
+    async read(id: number) {
         await this.exists(id);
 
-        return this.momentRepository.findOneBy({
-            id
+        return this.momentRepository.findOne({
+            where: { id },
+            relations: ['usuario']
         });
     }
 
-    async update(id: number, data: CreateMomentDTO) {
+    async update(id: number, data: MomentDTO) {
 
         await this.exists(id);
 
         await this.momentRepository.update(id, data);
 
-        return this.show(id);
+        return this.read(id);
 
     }
 
@@ -59,7 +58,7 @@ export class MomentService {
 
         await this.momentRepository.update(id, dados);
 
-        return this.show(id);
+        return this.read(id);
 
     }
 
@@ -82,7 +81,7 @@ export class MomentService {
         });
 
         if (!idCount) {
-            throw new NotFoundException(`O Moment com id ${id} não existe!`)
+            throw new NotFoundException(`Moment não encontrado`)
         }
     }
 

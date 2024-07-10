@@ -1,7 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsNotEmpty, IsString } from "class-validator";
+import { UserDTO } from "src/resources/user/dto/user.dto";
 
-export class CreateMomentDTO {
+export class MomentDTO {
 
     @IsString()
     @IsNotEmpty()
@@ -12,4 +13,9 @@ export class CreateMomentDTO {
     @IsNotEmpty()
     @ApiProperty({ description: "Data do Moment" })
     data: Date;
+
+    @IsNotEmpty()
+    @ApiProperty({ description: "ID do usuário ao qual pertence o moment" })
+    id_usuario: UserDTO;
+
 }

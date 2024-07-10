@@ -29,7 +29,7 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Post('perfil')
+  @Post('profile')
   @ApiCreatedResponse({ description: 'Exibe as credenciais do usuário cujo token está logado.' })
   async perfil(@User() user, @Req() { tokenPayload }) {
     return { user, tokenPayload };

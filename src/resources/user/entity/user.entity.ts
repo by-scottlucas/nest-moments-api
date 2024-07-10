@@ -1,5 +1,6 @@
 import { UserEnum } from "src/enums/user.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { MomentEntity } from "src/resources/moment/entity/moment.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: "usuario" })
 export class UserEntity {
@@ -16,7 +17,10 @@ export class UserEntity {
     @Column()
     senha: string;
 
-    @Column({ default: UserEnum.Cliente })
+    @Column({ default: UserEnum.Usuario })
     tipo_usuario: string;
+
+    @OneToMany(() => MomentEntity, moment => moment)
+    momentos: MomentEntity[];
 
 }

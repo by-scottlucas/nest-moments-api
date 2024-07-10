@@ -1,4 +1,4 @@
 import { PartialType } from "@nestjs/mapped-types";
-import { CreateMomentDTO } from "./create.moment.dto";
+import { MomentDTO } from "./moment.dto";
 
-export class UpdatePatchMomentDTO extends PartialType(CreateMomentDTO) { }
+export class UpdatePatchMomentDTO extends PartialType(MomentDTO) { }

@@ -81,9 +81,11 @@ export class AuthService {
 
     }
 
-    async register({ nome, email, senha, tipo_usuario }: AuthRegisterDTO) {
-        const data: any = { nome, email, senha, tipo_usuario }
-        await this.userService.create(data);
+    async register({ nome, email, senha }: AuthRegisterDTO) {
+        const data: any = { nome, email, senha }
+        const dados = await this.userService.create(data);
+        return this.userRepository.save(dados)
+
     }
 
     async forget(email: string) {
@@ -156,7 +158,7 @@ export class AuthService {
         //         console.error("Erro ao enviar o e-mail.", error);
         //     });
 
-        return true;
+        return { token };
 
     }
 
