@@ -4,4 +4,4 @@ export const ParamId = createParamDecorator((_data: unknown, context: ExecutionC
 
     return Number(context.switchToHttp().getRequest().params.id);
 
-});
+})
