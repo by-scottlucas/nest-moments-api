@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { UserEntity } from "src/resources/user/entity/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ name: 'moments' })
+@Entity({ name: 'moment' })
 export class MomentEntity {
 
     @PrimaryGeneratedColumn()
