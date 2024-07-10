@@ -1,11 +1,17 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiCreatedResponse, ApiNoContentResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ParamId } from 'src/decorators/param.id.decorator';
+import { Roles } from 'src/decorators/role.decorator';
+import { RoleEnum } from 'src/enums/role.enum';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 
 import { UpdatePatchUserDTO } from './dto/update.patch.user.dto';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 
+@Roles(RoleEnum.Admin)
+@UseGuards(AuthGuard, RoleGuard)
 @Controller('api/v1/users')
 export class UserController {
 
@@ -48,5 +54,4 @@ export class UserController {
   async excluirUsuario(@ParamId("id") id: number) {
     return this.userService.delete(id);
   }
-
 }

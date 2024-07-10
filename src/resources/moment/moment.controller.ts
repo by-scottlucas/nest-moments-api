@@ -1,15 +1,23 @@
-import { Body, Controller, Delete, Get, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Patch, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ParamId } from 'src/decorators/param.id.decorator';
 
 import { MomentDTO } from './dto/moment.dto';
 import { UpdatePatchMomentDTO } from './dto/update.patch.Moment.dto';
 import { MomentService } from './moment.service';
+import { Roles } from 'src/decorators/role.decorator';
+import { RoleEnum } from 'src/enums/role.enum';
+import { AuthGuard } from 'src/guards/auth.guard';
+import { RoleGuard } from 'src/guards/role.guard';
 
+@Roles(RoleEnum.Admin, RoleEnum.Usuario)
+@UseGuards(AuthGuard, RoleGuard)
 @Controller('api/v1/moments')
 export class MomentController {
 
-    constructor(private momentService: MomentService) { }
+    constructor(
+        private momentService: MomentService
+    ) { }
 
     @Post()
     @ApiCreatedResponse({ description: "Cria um novo Moment" })
