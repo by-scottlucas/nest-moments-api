@@ -20,37 +20,31 @@ export class UserController {
   ) { }
 
   @Get()
-  @ApiOkResponse({ description: "Lista os usuários no Sistema" })
+  @ApiOkResponse({ description: "Lista os usuários cadastrados no Sistema" })
   async listarUsuarios() {
     return this.userService.list();
   }
 
   @Post()
-  @ApiCreatedResponse({ description: "Adiciona um usuário ao sistema" })
+  @ApiCreatedResponse({ description: "Cadastra um novo usuário no sistema" })
   async adicionarUsuario(@Body() usuario: UserDTO) {
     return this.userService.create(usuario);
   }
 
   @Get(":id")
-  @ApiOkResponse({ description: "Lista um único usuário no sistema" })
+  @ApiOkResponse({ description: "Lista um único usuário cadastrado no sistema utilizando seu identificador" })
   async listarUsuario(@ParamId("id") id: number) {
     return this.userService.read(id);
   }
 
-  @Put(":id")
-  @ApiCreatedResponse({ description: "Atualiza os dados de um usuário no sistema" })
-  async atualizarUsuario(@ParamId("id") id: number, @Body() usuario: UserDTO) {
+  @Patch(":id")
+  @ApiCreatedResponse({ description: "Atualiza parcialmente os dados de um usuário cadastrado no sistema" })
+  async atualizarParcialmenteUsuario(@ParamId("id") id: number, @Body() usuario: UpdatePatchUserDTO) {
     return this.userService.update(id, usuario);
   }
 
-  @Patch(":id")
-  @ApiCreatedResponse({ description: "Atualiza os dados de um usuário no sistema" })
-  async atualizarParcialmenteUsuario(@ParamId("id") id: number, @Body() usuario: UpdatePatchUserDTO) {
-    return this.userService.updatePartial(id, usuario);
-  }
-
   @Delete(":id")
-  @ApiNoContentResponse({ description: "Exclui um usuário do sistema" })
+  @ApiNoContentResponse({ description: "Exclui um usuário cadastrado do sistema" })
   async excluirUsuario(@ParamId("id") id: number) {
     return this.userService.delete(id);
   }

@@ -15,7 +15,7 @@ export class MomentDTO {
     data: Date;
 
     @IsNotEmpty()
-    @ApiProperty({ description: "ID do usuário ao qual pertence o moment" })
+    @ApiProperty({ description: "ID do usuário ao qual pertence o Moment" })
     id_usuario: UserDTO;
 
 }

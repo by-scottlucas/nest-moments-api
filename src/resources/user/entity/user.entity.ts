@@ -22,6 +22,6 @@ export class UserEntity {
     tipo_usuario: string;
 
     @OneToMany(() => MomentEntity, moment => moment)
-    momentos: MomentEntity[];
+    moments: MomentEntity[];
 
 }

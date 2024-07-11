@@ -17,7 +17,7 @@ export class AuthController {
   ) { }
 
   @Post('register')
-  @ApiCreatedResponse({ description: 'Cria uma conta do usuário no sistema.' })
+  @ApiCreatedResponse({ description: 'Cria uma conta de usuário no sistema.' })
   async criarConta(@Body() data: AuthRegisterDTO) {
     return this.authService.register(data);
   }
@@ -36,13 +36,13 @@ export class AuthController {
   }
 
   @Post('forget')
-  @ApiCreatedResponse({ description: 'Realiza o envio de um token para a troca de senha.' })
+  @ApiCreatedResponse({ description: 'Realiza o envio de um token via e-mail para a troca de senha.' })
   async forget(@Body() { email }: AuthForgetDTO) {
     return this.authService.forget(email);
   }
 
   @Post('reset')
-  @ApiCreatedResponse({ description: 'Realiza a troca de senha utilizando um token enviado via e-mail.' })
+  @ApiCreatedResponse({ description: 'Realiza a troca de senha utilizando o token enviado via e-mail.' })
   async reset(@Body() { senha, token }: AuthResetDTO) {
     return this.authService.reset(senha, token);
   }

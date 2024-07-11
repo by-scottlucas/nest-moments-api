@@ -10,7 +10,9 @@ import { UserService } from './user.service';
 @Module({
     imports: [
         JwtModule.register({ secret: String(process.env.JWT_SECRET) }),
-        TypeOrmModule.forFeature([UserEntity]),
+        TypeOrmModule.forFeature([
+            UserEntity
+        ]),
         forwardRef(() => AuthModule)
     ],
     providers: [UserService],

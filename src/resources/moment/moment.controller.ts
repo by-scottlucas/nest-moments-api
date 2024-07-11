@@ -19,35 +19,35 @@ export class MomentController {
         private momentService: MomentService
     ) { }
 
-    @Post()
-    @ApiCreatedResponse({ description: "Cria um novo Moment" })
-    async create(@Body() data: MomentDTO) {
-        return this.momentService.create(data);
-    }
-
     @Roles(RoleEnum.Admin)
     @UseGuards(RoleGuard)
     @Get()
-    @ApiOkResponse({ description: "Lista todos os Moments. Permitido para Admnistradores" })
-    async list() {
+    @ApiOkResponse({ description: "Lista todos os Moments no sistema. Permitido para Admnistradores." })
+    async listMoments() {
         return this.momentService.list();
     }
 
-    @Get(':id')
+    @Post()
+    @ApiCreatedResponse({ description: "Cria um novo Moment" })
+    async createMomente(@Body() data: MomentDTO) {
+        return this.momentService.create(data);
+    }
+
+    @Get(':id_usuario')
     @ApiOkResponse({ description: "Lista os Moments de um Usuário" })
-    async readOne(@ParamId() id: number): Promise<MomentEntity[]> {
-        return this.momentService.read(id);
+    async listMomentsUser(@ParamId('id_usuario') id_usuario: number): Promise<MomentEntity[]> {
+        return this.momentService.read(id_usuario);
     }
 
     @Patch(':id')
     @ApiOkResponse({ description: "Atualiza parcialmente os dados de um Moment" })
-    async updatePartial(@ParamId() id: number, @Body() data: UpdatePatchMomentDTO) {
+    async updateMoment(@ParamId() id: number, @Body() data: UpdatePatchMomentDTO) {
         return this.momentService.update(id, data);
     }
 
     @Delete(':id')
     @ApiOkResponse({ description: "Exclui um Moment" })
-    async delete(@ParamId() id: number) {
+    async deleteMoment(@ParamId() id: number) {
         return this.momentService.delete(id);
     }
 

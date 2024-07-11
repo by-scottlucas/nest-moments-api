@@ -1,11 +1,12 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { InjectRepository } from "@nestjs/typeorm";
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Repository } from "typeorm";
-import { UpdatePatchUserDTO } from "./dto/update.patch.user.dto";
-import { UserDTO } from "./dto/user.dto";
-import { UserEntity } from "./entity/user.entity";
+import { Repository } from 'typeorm';
+
+import { UpdatePatchUserDTO } from './dto/update.patch.user.dto';
+import { UserDTO } from './dto/user.dto';
+import { UserEntity } from './entity/user.entity';
 
 @Injectable()
 export class UserService {
@@ -16,7 +17,7 @@ export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private userRepository: Repository<UserEntity>,
-        private readonly jwtService: JwtService,
+        private jwtService: JwtService,
     ) { }
 
     async list() {
@@ -28,10 +29,6 @@ export class UserService {
         if (await this.userRepository.exists({ where: { email: data.email } })) {
             throw new BadRequestException("E-mail já cadastrado.")
         }
-
-        // if (await this.userRepository.exists({ where: { cpf: data.cpf } })) {
-        //     throw new BadRequestException("CPF já cadastrado.")
-        // }
 
         const salt = await bcrypt.genSalt();
         data.senha = await bcrypt.hash(data.senha, salt);
@@ -48,20 +45,7 @@ export class UserService {
 
     }
 
-    async update(id: number, data: UserDTO) {
-
-        await this.exists(id);
-
-        const salt = await bcrypt.genSalt();
-        data.senha = await bcrypt.hash(data.senha, salt);
-
-        await this.userRepository.update(id, data);
-
-        return this.read(id);
-
-    }
-
-    async updatePartial(id: number, { nome, email, senha, tipo_usuario }: UpdatePatchUserDTO) {
+    async update(id: number, { nome, email, senha, tipo_usuario }: UpdatePatchUserDTO) {
 
         await this.exists(id);
 
