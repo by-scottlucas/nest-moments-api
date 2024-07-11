@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -15,36 +15,23 @@ export class MomentService {
     ) { }
 
     async list() {
-        return this.momentRepository.find({ relations: ['usuario'] });
+        return this.momentRepository.find({ relations: ['id_usuario'] });
     }
 
     create(data: MomentDTO) {
-        // const moment = await this.momentRepository.create(data);
         return this.momentRepository.save(data);
     }
 
     async read(id: number) {
-        await this.exists(id);
-
-        return this.momentRepository.findOne({
-            where: { id },
-            relations: ['usuario']
+        return this.momentRepository.find({
+            where: { id_usuario: { id } },
+            relations: ['id_usuario']
         });
     }
 
-    async update(id: number, data: MomentDTO) {
+    async update(id: number, { titulo, data }: UpdatePatchMomentDTO) {
 
-        await this.exists(id);
-
-        await this.momentRepository.update(id, data);
-
-        return this.read(id);
-
-    }
-
-    async updatePartial(id: number, { titulo, data }: UpdatePatchMomentDTO) {
-
-        await this.exists(id);
+        await this.momentRepository.exists({ where: { id } });
 
         const dados: any = {};
 
@@ -64,25 +51,12 @@ export class MomentService {
 
     async delete(id: number) {
 
-        await this.exists(id);
+        await this.momentRepository.exists({ where: { id } });
 
         await this.momentRepository.delete(id);
 
         return;
 
-    }
-
-    private async exists(id: number) {
-
-        const idCount = await this.momentRepository.exists({
-            where: {
-                id
-            }
-        });
-
-        if (!idCount) {
-            throw new NotFoundException(`Moment não encontrado`)
-        }
     }
 
 }
