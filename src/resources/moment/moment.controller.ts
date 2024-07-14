@@ -11,7 +11,8 @@ import { UpdatePatchMomentDTO } from './dto/update.patch.Moment.dto';
 import { MomentEntity } from './entity/moment.entity';
 import { MomentService } from './moment.service';
 
-@UseGuards(AuthGuard)
+@Roles(RoleEnum.Admin, RoleEnum.Usuario)
+@UseGuards(AuthGuard, RoleGuard)
 @Controller('api/v1/moments')
 export class MomentController {
 
@@ -19,8 +20,6 @@ export class MomentController {
         private momentService: MomentService
     ) { }
 
-    @Roles(RoleEnum.Admin)
-    @UseGuards(RoleGuard)
     @Get()
     @ApiOkResponse({ description: "Lista todos os Moments no sistema. Permitido para Admnistradores." })
     async listMoments() {
@@ -33,10 +32,10 @@ export class MomentController {
         return this.momentService.create(data);
     }
 
-    @Get(':id_usuario')
+    @Get(':id')
     @ApiOkResponse({ description: "Lista os Moments de um Usuário" })
-    async listMomentsUser(@ParamId('id_usuario') id_usuario: number): Promise<MomentEntity[]> {
-        return this.momentService.read(id_usuario);
+    async listMomentsUser(@ParamId() id: number): Promise<MomentEntity> {
+        return this.momentService.read(id);
     }
 
     @Patch(':id')

@@ -17,7 +17,7 @@ export class MomentEntity {
     @ApiProperty({ description: "Coluna de data da entidade" })
     data: Date;
 
-    @ManyToOne(() => UserEntity, user => user.id)
+    @ManyToOne(() => UserEntity)
     @JoinColumn({name: 'id_usuario'})
     id_usuario: UserEntity
 

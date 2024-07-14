@@ -23,10 +23,7 @@ export class MomentService {
     }
 
     async read(id: number) {
-        return this.momentRepository.find({
-            where: { id_usuario: { id } },
-            relations: ['id_usuario']
-        });
+        return this.momentRepository.findOneBy({ id })
     }
 
     async update(id: number, { titulo, data }: UpdatePatchMomentDTO) {
