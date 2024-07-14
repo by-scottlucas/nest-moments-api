@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as session from 'express-session';
 
 import { AppModule } from './app.module';
 import { LogInterceptor } from './interceptors/log.interceptor';
@@ -9,7 +10,17 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  app.use(session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // Defina como true em produção se estiver usando HTTPS
+  }));
+
+  app.enableCors({
+    origin: 'http://localhost:8100', // URL do seu app Ionic
+    credentials: true,
+  });
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new LogInterceptor());

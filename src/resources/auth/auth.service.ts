@@ -76,7 +76,8 @@ export class AuthService {
         }
 
         const token = await this.createToken(usuario);
-        console.log("Token Login => ", token);
+        console.log("Usuário logado!");
+        // console.log("Token Login => ", token);
         return this.createToken(usuario);
 
     }

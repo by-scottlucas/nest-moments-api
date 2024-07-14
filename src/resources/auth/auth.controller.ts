@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Session, UseGuards } from '@nestjs/common';
 import { ApiCreatedResponse } from '@nestjs/swagger';
 import { AuthGuard } from 'src/guards/auth.guard';
 
@@ -24,15 +24,37 @@ export class AuthController {
 
   @Post('login')
   @ApiCreatedResponse({ description: 'Loga o usuário no sistema.' })
-  async entrar(@Body() { email, senha }: AuthLoginDTO) {
-    return this.authService.login(email, senha);
+  async entrar(@Body() { email, senha }: AuthLoginDTO, @Session() session: Record<string, any>) {
+    const token = await this.authService.login(email, senha);
+    session.jwt = token.accessToken;
+    return token;
+  }
+
+  @Post('logout')
+  @ApiCreatedResponse({ description: 'Desloga o usuário no sistema.' })
+  async sair(@Session() session: Record<string, any>) {
+    session.destroy((err) => {
+      if (err) {
+        throw new Error('Falha ao destruir a sessão');
+      }
+    });
+    return { message: 'Deslogado com Sucesso' };
+  }
+
+  @Get('get-session')
+  async getSession(@Session() session: Record<string, any>) {
+    if (session && session.jwt) {
+      return { token: session.jwt };
+    } else {
+      return { message: 'Nenhuma sessão ativa encontrada.' };
+    }
   }
 
   @UseGuards(AuthGuard)
   @Post('profile')
   @ApiCreatedResponse({ description: 'Exibe as credenciais do usuário cujo token está logado.' })
-  async perfil(@User() user, @Req() { tokenPayload }) {
-    return { user, tokenPayload };
+  async perfil(@User() user, @Req() req: any) {
+    return { user, tokenPayload: req.session.jwt };
   }
 
   @Post('forget')
