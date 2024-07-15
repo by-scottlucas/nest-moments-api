@@ -10,8 +10,9 @@ import { UpdatePatchUserDTO } from './dto/update.patch.user.dto';
 import { UserDTO } from './dto/user.dto';
 import { UserService } from './user.service';
 
-@Roles(RoleEnum.Admin)
-@UseGuards(AuthGuard, RoleGuard)
+// @Roles(RoleEnum.Admin)
+// @UseGuards(AuthGuard, RoleGuard)
+@UseGuards(AuthGuard)
 @Controller('api/v1/users')
 export class UserController {
 
