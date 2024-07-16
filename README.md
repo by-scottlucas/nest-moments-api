@@ -12,19 +12,20 @@ Link do repositório do aplicativo: [Ionic Moments](https://github.com/by-scottl
 
 ## Estrutura do Projeto
 
-- `src/decorators`: Contém os decoradores personalizados utilizados no projeto.
+* **src/decorators**: Contém os decoradores personalizados utilizados no projeto.
 
-- `src/enums`: Contém as enumerações usadas para definir constantes específicas do projeto, como papéis de usuários.
+* **src/enums**: Contém as enumerações usadas para definir constantes específicas do projeto, como papéis de usuários.
 
-- `src/guards`: Contém os guardiões (guards) que são usados para proteger rotas e recursos, controlando o acesso com base em regras definidas.
+* **src/guards**: Contém os guardiões (guards) que são usados para proteger rotas e recursos, controlando o acesso com base em regras definidas.
 
-- `src/interceptors`: Contém os interceptores que permitem modificar ou inspecionar as solicitações e respostas da API.
+* **src/interceptors**: Contém os interceptores que permitem modificar ou inspecionar as solicitações e respostas da API.
 
-- `src/resources/auth`: Contém os recursos relacionados à autenticação, incluindo serviços e controladores.
+* **src/resources/auth**: Contém os recursos relacionados à autenticação, incluindo serviços e controladores.
 
-- `src/resources/moment`: Contém os recursos relacionados aos momentos, como serviços e controladores para operações CRUD.
+* **src/resources/moment**: Contém os recursos relacionados aos momentos, como serviços e controladores para operações CRUD.
 
-- `src/resources/user`: Contém os recursos relacionados aos usuários, incluindo serviços e controladores para gerenciamento de usuários.
+* **src/resources/user**: Contém os recursos relacionados aos usuários, incluindo serviços e controladores para gerenciamento de usuários.
+
 
 ### Pré-requisitos
 
@@ -43,6 +44,7 @@ npm run start:dev
 ## Documentação
 
 É possivel acessar documentação da API em modo desenvolvimento acessando: http://localhost:3000/api
+
 
 ## Tecnologias utilizadas
 
